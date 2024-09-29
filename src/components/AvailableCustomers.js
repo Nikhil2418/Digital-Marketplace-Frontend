@@ -4,8 +4,9 @@ const AvailableCustomers = () => {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
+    console.log('Fetching customers...');
     const fetchCustomers = async () => {
-      const response = await fetch('http://localhost:5000/api/customers');
+      const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/customers');
       const data = await response.json();
       setCustomers(data);
     };

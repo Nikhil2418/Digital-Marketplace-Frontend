@@ -2,114 +2,212 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const ServiceForm = () => {
-  const { id } = useParams(); // For editing
+  const { id } = useParams(); // Get the service ID from the URL, if available
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-  const [price, setPrice] = useState('');
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [service, setService] = useState({
+    title: '',
+    description: '',
+    skills: '',
+    budget: '',
+    country: '',
+    duration: '',
+    timeCommitment: '',
+    level: 'Intermediate' // Default level set to "Intermediate"
+  });
 
   useEffect(() => {
     if (id) {
-      // Fetch existing service for editing
-      fetch(`/api/services/${id}`)
-        .then((res) => res.json())
+      setLoading(true);
+      fetch(`https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
         .then((data) => {
-          setTitle(data.title);
-          setDescription(data.description);
-          setCategory(data.category);
-          setPrice(data.price);
+          setService({
+            title: data.title,
+            description: data.description,
+            skills: data.skills.join(', '),
+            budget: data.budget,
+            country: data.country,
+            duration: data.duration,
+            timeCommitment: data.timeCommitment,
+            level: data.level || 'Intermediate', // If no level is found, default to "Intermediate"
+          });
+          setLoading(false);
         })
-        .catch((err) => setError('Failed to load service data'));
+        .catch((error) => {
+          console.error('Error loading service data:', error);
+          setLoading(false);
+        });
     }
-  }, [id]);
+  }, [id, token]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setService({ ...service, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const serviceData = { title, description, category, price };
+    const requestUrl = id
+      ? `https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`
+      : 'https://digital-marketplace-backend-production.up.railway.app/api/services/create';
+    const requestMethod = id ? 'PUT' : 'POST';
 
     try {
-      const response = await fetch(id ? `/api/services/${id}` : '/api/services', {
-        method: id ? 'PUT' : 'POST',
+      const response = await fetch(requestUrl, {
+        method: requestMethod,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(serviceData),
+        body: JSON.stringify({
+          ...service,
+          skills: service.skills.split(',').map((skill) => skill.trim()), // Convert skills string back to array
+        }),
       });
 
-      const data = await response.json();
       if (response.ok) {
-        navigate('/services'); // Redirect to service list
+        navigate('/provider-dashboard');
       } else {
-        setError(data.message);
+        console.error('Failed to save service');
       }
     } catch (error) {
-      setError('Failed to save service');
+      console.error('Error saving service:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-4">{id ? 'Edit' : 'Create'} Service</h2>
-
-      {error && <p className="text-red-500">{error}</p>}
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-gray-700">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Service Title"
-            required
-          />
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <form onSubmit={handleSubmit} className="w-full max-w-2xl p-8 bg-white shadow-lg rounded-lg space-y-6">
+        <h2 className="text-3xl font-extrabold text-gray-800 text-center">
+          {id ? 'Edit Service' : 'Create New Service'}
+        </h2>
+        <p className="text-center text-gray-500 mb-6">Provide detailed information about the service you're offering.</p>
+        {loading ? (
+          <p className="text-center text-gray-500">Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="col-span-1">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700">Service Title</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={service.title}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="budget" className="block text-sm font-medium text-gray-700">Budget ($)</label>
+              <input
+                type="text"
+                id="budget"
+                name="budget"
+                value={service.budget}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="col-span-2">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                value={service.description}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                rows="5"
+              ></textarea>
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="skills" className="block text-sm font-medium text-gray-700">Skills Needed</label>
+              <input
+                type="text"
+                id="skills"
+                name="skills"
+                value={service.skills}
+                onChange={handleChange}
+                placeholder="Enter skills separated by commas"
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                value={service.country}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="duration" className="block text-sm font-medium text-gray-700">Duration</label>
+              <input
+                type="text"
+                id="duration"
+                name="duration"
+                value={service.duration}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div className="col-span-1">
+              <label htmlFor="timeCommitment" className="block text-sm font-medium text-gray-700">Time Commitment</label>
+              <input
+                type="text"
+                id="timeCommitment"
+                name="timeCommitment"
+                value={service.timeCommitment}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            {/* New Level Field */}
+            <div className="col-span-2">
+              <label htmlFor="level" className="block text-sm font-medium text-gray-700">Service Level</label>
+              <select
+                id="level"
+                name="level"
+                value={service.level}
+                onChange={handleChange}
+                required
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Expert">Expert</option>
+              </select>
+            </div>
+          </div>
+        )}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="w-full md:w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            {id ? 'Update Service' : 'Create Service'}
+          </button>
         </div>
-
-        <div>
-          <label className="block text-gray-700">Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Service Description"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Category</label>
-          <input
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Service Category"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700">Price</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Service Price"
-            required
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"
-        >
-          {id ? 'Update' : 'Create'} Service
-        </button>
       </form>
     </div>
   );
