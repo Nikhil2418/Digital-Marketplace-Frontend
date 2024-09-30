@@ -86,7 +86,7 @@ const ServiceProviderProfile = () => {
             <p className="text-gray-700 font-medium mt-2">{provider.companyName || 'N/A'}</p>
             {/* Average Rating */}
             <p className="text-yellow-500 mt-2">
-              Average Rating: {provider.averageRating?.toFixed(2) || 'No ratings yet'}
+              Rating: {provider.averageRating?.toFixed(2) || 'No ratings yet'}
             </p>
           </div>
         </div>

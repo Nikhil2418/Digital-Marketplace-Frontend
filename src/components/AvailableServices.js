@@ -73,7 +73,7 @@ const AvailableServices = () => {
               {/* Title and Budget */}
               <div className="flex justify-between items-center mb-2">
                 <h2 className="text-2xl font-bold">{service.title}</h2>
-                <span className="text-green-600 font-semibold">Budget: ${service.price}</span>
+                <span className="text-green-600 font-semibold">Budget: ${service.budget}</span>
               </div>
 
               {/* Description */}
