@@ -10,7 +10,7 @@ const AvailableCustomers = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/customer-profiles', {
+        const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/customer-profiles', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

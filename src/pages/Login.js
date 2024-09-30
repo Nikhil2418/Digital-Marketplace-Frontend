@@ -12,7 +12,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const Login = () => {
     console.log('Checking profile completion...',userId);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/customer-profiles/${localStorage.getItem('userId')}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/customer-profiles/${localStorage.getItem('userId')}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       });

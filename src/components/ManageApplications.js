@@ -15,7 +15,7 @@ const ManageApplications = () => {
     // Fetch the logged-in user's applications
     const fetchApplications = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/applications/user/${userId}`, {
+        const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/applications/user/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const ManageApplications = () => {
   // Handle delete button click
   const handleDelete = async (applicationId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/applications/${applicationId}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/applications/${applicationId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const ManageApplications = () => {
   // Handle status update button click
   const handleStatusUpdate = async (applicationId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/applications/${applicationId}/status`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/applications/${applicationId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const ManageApplications = () => {
   // Handle review submission
   const handleReviewSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/applications/${selectedApplicationId}/review`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/applications/${selectedApplicationId}/review`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

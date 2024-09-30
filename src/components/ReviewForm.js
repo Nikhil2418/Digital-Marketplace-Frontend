@@ -9,7 +9,7 @@ const ReviewForm = ({ profileType, profileId }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/${profileType}/${profileId}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/reviews/${profileType}/${profileId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

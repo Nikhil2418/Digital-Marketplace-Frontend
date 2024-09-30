@@ -15,7 +15,7 @@ const ProviderApplications = () => {
     // Fetch provider's applications from the backend API
     const fetchApplications = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/applications/provider', {
+        const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/applications/provider', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const ProviderApplications = () => {
   // Handle Payment for Completed Applications
   const handlePayment = async (applicationId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/applications/${applicationId}/payment-status`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/applications/${applicationId}/payment-status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const ProviderApplications = () => {
   // Handle Review Submission
   const handleReviewSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/applications/${selectedApplicationId}/review`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/applications/${selectedApplicationId}/review`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

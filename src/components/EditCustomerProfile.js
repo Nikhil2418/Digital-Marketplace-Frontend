@@ -27,7 +27,7 @@ const EditCustomerProfile = () => {
     // Fetch the existing profile data
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/customer-profiles/${id}`, {
+        const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/customer-profiles/${id}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         });
@@ -75,7 +75,7 @@ const EditCustomerProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/customer-profiles/${id}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/customer-profiles/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(profile),

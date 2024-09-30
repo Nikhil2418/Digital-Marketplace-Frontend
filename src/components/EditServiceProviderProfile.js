@@ -18,7 +18,7 @@ const EditServiceProviderProfile = () => {
     // Fetch the current profile data to populate the form fields
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/profile/service-provider/${userId}`, {
+        const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/profile/service-provider/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const EditServiceProviderProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/api/profile/service-provider/${userId}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/profile/service-provider/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

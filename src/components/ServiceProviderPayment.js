@@ -5,7 +5,7 @@ const ServiceProviderPayment = ({ serviceId, currentStatus }) => {
 
   const handleMarkAsPaid = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/services/mark-paid', {
+      const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/services/mark-paid', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const ServiceProviderProfile = () => {
     // Fetch service provider profile using user ID
     const fetchProviderProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/profile/service-provider/${userId}`, {
+        const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/profile/service-provider/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const ServiceProviderProfile = () => {
 
   const handleReviewSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/service-provider/${userId}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/reviews/service-provider/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

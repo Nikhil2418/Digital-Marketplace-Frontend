@@ -19,7 +19,7 @@ const CustomerProfile = () => {
     // Fetch customer profile using user ID
     const fetchCustomerProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/customer-profiles/${userId}`, {
+        const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/customer-profiles/${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const CustomerProfile = () => {
   // Handle Review Submission
   const handleReviewSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/customer/${userId}`, {
+      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/reviews/customer/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

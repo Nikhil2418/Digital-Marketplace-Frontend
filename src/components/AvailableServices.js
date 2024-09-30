@@ -11,7 +11,7 @@ const AvailableServices = () => {
     // Fetch all services from the API when the component loads
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/services/provider', {
+        const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/services/provider', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const AvailableServices = () => {
   // Handle the Apply Now button click
   const handleApply = async (serviceId) => {
     try {
-      const response = await fetch('http://localhost:5000/api/applications', {
+      const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
