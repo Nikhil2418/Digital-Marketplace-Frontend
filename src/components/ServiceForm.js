@@ -20,7 +20,7 @@ const ServiceForm = () => {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      fetch(`https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`, {
+      fetch(`http://localhost:5000/api/services/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -58,8 +58,8 @@ const ServiceForm = () => {
     setLoading(true);
 
     const requestUrl = id
-      ? `https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`
-      : 'https://digital-marketplace-backend-production.up.railway.app/api/services/create';
+      ? `http://localhost:5000/api/services/${id}`
+      : 'http://localhost:5000/api/services/create';
     const requestMethod = id ? 'PUT' : 'POST';
 
     try {

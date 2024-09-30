@@ -23,7 +23,7 @@ const CustomerDashboard = () => {
         </div>
 
         {/* Find Services Card */}
-        <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+        {/* <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
           <h2 className="text-2xl font-bold mb-2">Find Services</h2>
           <p className="text-gray-700 mb-4">Browse and find services that match your needs and requirements.</p>
           <button
@@ -32,7 +32,7 @@ const CustomerDashboard = () => {
           >
             Browse Services
           </button>
-        </div>
+        </div> */}
 
         {/* Profile Settings Card */}
         <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">

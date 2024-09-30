@@ -11,7 +11,7 @@ const AvailableServices = () => {
     // Fetch all services from the API when the component loads
     const fetchServices = async () => {
       try {
-        const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/services/provider', {
+        const response = await fetch('http://localhost:5000/api/services/provider', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const AvailableServices = () => {
   // Handle the Apply Now button click
   const handleApply = async (serviceId) => {
     try {
-      const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/applications', {
+      const response = await fetch('http://localhost:5000/api/applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,6 +117,15 @@ const AvailableServices = () => {
                 >
                   View Details
                 </button>
+
+                <a
+                  href={`/service-provider-profile/${service.provider.id}`} // Replace with the correct route
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 font-semibold hover:underline"
+                >
+                  View Profile
+                </a>
                 <button
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
                   onClick={() => handleApply(service._id)} // Call handleApply with service ID

@@ -24,6 +24,7 @@ import EditCustomerProfile from "./components/EditCustomerProfile";
 import ProviderApplications from "./components/ProviderApplications";
 import ManageApplications from "./components/ManageApplications";
 import ServiceProviderProfile from "./components/ServiceProviderProfile";
+import EditServiceProviderProfile from "./components/EditServiceProviderProfile";
 
 function App() {
   const userType = localStorage.getItem("userType");
@@ -83,7 +84,7 @@ function App() {
           <Route
             path="/customer-profile/:id"
             element={
-              <PrivateRoute allowedRoles={["customer"]}>
+              <PrivateRoute allowedRoles={["customer", "service-provider"]}>
                 <CustomerProfile />
               </PrivateRoute>
             }
@@ -135,6 +136,12 @@ function App() {
             }
           />
 
+        <Route path="/service-provider-profile/edit/:userId" element={
+          <PrivateRoute allowedRoles={["service-provider"]}>
+            <EditServiceProviderProfile />
+          </PrivateRoute>
+          } />
+
           <Route
             path="/provider-applications"
             element={
@@ -147,7 +154,7 @@ function App() {
           <Route
             path="/service-provider-profile/:id"
             element={
-              <PrivateRoute allowedRoles={["service-provider"]}>
+              <PrivateRoute allowedRoles={["service-provider", "customer"]}>
                 <ServiceProviderProfile />
               </PrivateRoute>
             }

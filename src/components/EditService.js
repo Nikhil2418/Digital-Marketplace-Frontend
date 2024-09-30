@@ -20,7 +20,7 @@ const EditService = () => {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`, {
+        const response = await fetch(`http://localhost:5000/api/services/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const EditService = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/services/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

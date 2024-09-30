@@ -10,7 +10,7 @@ const ProviderDashboard = () => {
   // Fetch services from API
   const fetchServices = async () => {
     try {
-      const response = await fetch('https://digital-marketplace-backend-production.up.railway.app/api/services/provider', {
+      const response = await fetch('http://localhost:5000/api/services/provider', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const ProviderDashboard = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`https://digital-marketplace-backend-production.up.railway.app/api/services/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/services/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
